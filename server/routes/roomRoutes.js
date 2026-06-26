@@ -4,7 +4,8 @@ import protect from "../middleware/authMiddleware.js";
 
 import {
     createRoomController,
-    joinRoomController
+    joinRoomController,
+    getRoomController,
 } from "../controllers/roomController.js";
 
 const router = express.Router();
@@ -12,5 +13,7 @@ const router = express.Router();
 router.post("/create", protect, createRoomController);
 
 router.post("/join", protect, joinRoomController);
+
+router.get("/:roomId", protect, getRoomController);
 
 export default router;

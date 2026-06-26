@@ -58,3 +58,17 @@ export const joinRoom = async (roomId, userId) => {
     return room;
 
 };
+
+export const getRoomDetails = async (roomId) => {
+
+    const room = await Room.findOne({ roomId })
+        .populate("owner", "name email")
+        .populate("participants.user", "name email");
+
+    if (!room) {
+        throw new Error("Room not found");
+    }
+
+    return room;
+
+};
