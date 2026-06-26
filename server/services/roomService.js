@@ -15,7 +15,6 @@ export const generateUniqueRoomId = async () => {
     }
 
     return roomId;
-
 };
 
 export const createRoom = async (ownerId) => {
@@ -23,18 +22,38 @@ export const createRoom = async (ownerId) => {
     const roomId = await generateUniqueRoomId();
 
     const room = await Room.create({
-
         roomId,
-
         owner: ownerId,
-
         participants: [
             {
                 user: ownerId
             }
         ]
-
     });
+
+    return room;
+};
+
+export const joinRoom = async (roomId, userId) => {
+
+    const room = await Room.findOne({ roomId });
+
+    if (!room) {
+        throw new Error("Room not found");
+    }
+
+    const alreadyJoined = room.participants.some(
+        participant => participant.user.toString() === userId.toString()
+    );
+
+    if (!alreadyJoined) {
+
+        room.participants.push({
+            user: userId
+        });
+
+        await room.save();
+    }
 
     return room;
 
