@@ -17,3 +17,25 @@ export const generateUniqueRoomId = async () => {
     return roomId;
 
 };
+
+export const createRoom = async (ownerId) => {
+
+    const roomId = await generateUniqueRoomId();
+
+    const room = await Room.create({
+
+        roomId,
+
+        owner: ownerId,
+
+        participants: [
+            {
+                user: ownerId
+            }
+        ]
+
+    });
+
+    return room;
+
+};
