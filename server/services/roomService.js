@@ -72,3 +72,23 @@ export const getRoomDetails = async (roomId) => {
     return room;
 
 };
+
+export const deleteRoom = async (roomId, userId) => {
+
+    const room = await Room.findOne({ roomId });
+
+    if (!room) {
+        throw new Error("Room not found");
+    }
+
+    if (room.owner.toString() !== userId.toString()) {
+        throw new Error("You are not authorized to delete this room");
+    }
+
+    await Room.deleteOne({ roomId });
+
+    return {
+        message: "Room deleted successfully"
+    };
+
+};

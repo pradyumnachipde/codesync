@@ -1,4 +1,4 @@
-import { createRoom, joinRoom, getRoomDetails } from "../services/roomService.js";
+import { createRoom, joinRoom, getRoomDetails, deleteRoom } from "../services/roomService.js";
 
 export const createRoomController = async (req, res) => {
 
@@ -50,6 +50,27 @@ export const getRoomController = async (req, res) => {
         );
 
         return res.status(200).json(room);
+
+    } catch (error) {
+
+        return res.status(500).json({
+            message: error.message
+        });
+
+    }
+
+};
+
+export const deleteRoomController = async (req, res) => {
+
+    try {
+
+        const response = await deleteRoom(
+            req.params.roomId,
+            req.user._id
+        );
+
+        return res.status(200).json(response);
 
     } catch (error) {
 

@@ -6,6 +6,7 @@ import {
     createRoomController,
     joinRoomController,
     getRoomController,
+    deleteRoomController,
 } from "../controllers/roomController.js";
 
 const router = express.Router();
@@ -15,5 +16,7 @@ router.post("/create", protect, createRoomController);
 router.post("/join", protect, joinRoomController);
 
 router.get("/:roomId", protect, getRoomController);
+
+router.delete("/:roomId", protect, deleteRoomController);
 
 export default router;
